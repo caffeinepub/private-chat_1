@@ -1,0 +1,17 @@
+{
+  "frontend/src/index.css": "Global styles with OKLCH color system featuring warm ivory/charcoal base colors with amber accents for a premium, distinct chat UI theme supporting both light and dark modes.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending the theme with custom colors, border radius (1rem base), custom shadows (soft/medium/strong), and animations for a premium design system.",
+  "frontend/src/App.tsx": "Main application component managing authentication state, routing between screens (chat-list, chat-thread, profile), profile setup dialog, and theme provider integration.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including user profiles, chat list, messages, sending messages, unread counts, and marking messages as read with polling and optimistic updates.",
+  "frontend/src/components/AppHeader.tsx": "Application header component displaying the Private Chat logo, theme toggle, profile navigation, and logout button with responsive layout.",
+  "frontend/src/components/ProfileSetupDialog.tsx": "Modal dialog that prompts first-time users to set their display name after authentication, preventing dismissal until completed.",
+  "frontend/src/screens/SignInScreen.tsx": "Sign-in screen with branded logo, welcome message, and Internet Identity login button featuring a premium gradient background and card layout.",
+  "frontend/src/screens/ChatListScreen.tsx": "Chat list screen displaying all conversations sorted by last activity, with new chat dialog, empty state illustration, and navigation to individual threads.",
+  "frontend/src/screens/ChatThreadScreen.tsx": "Chat thread screen showing message history with auto-scroll, message bubbles, thread header, and message composer with polling for real-time updates.",
+  "frontend/src/screens/ProfileScreen.tsx": "Profile settings screen allowing users to update their display name and copy their Principal ID with card-based layout.",
+  "frontend/src/components/ChatThreadItem.tsx": "Chat list item component displaying user avatar, display name, last activity time, and unread message badge with hover effects.",
+  "frontend/src/components/ChatThreadHeader.tsx": "Thread header component showing the other participant's avatar, display name, and shortened Principal ID.",
+  "frontend/src/components/MessageBubble.tsx": "Message bubble component rendering individual messages with sender-based styling (primary color for own messages, card background for received), timestamps, and proper text wrapping.",
+  "frontend/src/components/MessageComposer.tsx": "Message input component with textarea, send button, character validation, keyboard shortcuts (Enter to send, Shift+Enter for new line), and loading states.",
+  "frontend/src/lib/validation.ts": "Client-side validation utilities for message content (max 1000 chars, non-empty) and display names (max 50 chars, non-empty) with typed error responses."
+}

@@ -1,0 +1,178 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-the-app-shell-and-branding-for-an-app-named-private-chat-and-ensure-the-ui-copy-uses-english-throughout",
+      "featureTitle": "Create the app shell and branding for an app named “Private Chat”, and ensure the UI copy uses English throughout.",
+      "files": [
+        "frontend/index.html",
+        "frontend/src/App.tsx",
+        "frontend/src/components/AppHeader.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-authentication-using-internet-identity-and-gate-chat-features-behind-sign-in",
+      "featureTitle": "Implement authentication using Internet Identity and gate chat features behind sign-in.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/hooks/useActor.ts",
+        "frontend/src/screens/SignInScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-frontend-build-a-premium-whatsapp-different-chat-ui-with-a-coherent-visual-theme-colors-typography-spacing-components-applied-consistently-across-all-screens",
+      "featureTitle": "Frontend: build a premium, WhatsApp-different chat UI with a coherent visual theme (colors, typography, spacing, components) applied consistently across all screens.",
+      "files": [
+        "frontend/src/index.css",
+        "frontend/src/screens/ChatListScreen.tsx",
+        "frontend/src/screens/ChatThreadScreen.tsx",
+        "frontend/src/screens/ProfileScreen.tsx",
+        "frontend/src/screens/SignInScreen.tsx",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-frontend-implement-chat-list-screen-showing-existing-1-1-threads-last-message-preview-last-activity-time-and-an-unread-indicator-if-available-with-navigation-into-a-thread",
+      "featureTitle": "Frontend: implement Chat List screen showing existing 1:1 threads, last message preview, last activity time, and an unread indicator (if available), with navigation into a thread.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/screens/ChatListScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-frontend-implement-chat-thread-screen-with-message-bubbles-timestamps-and-a-composer-to-send-messages-use-optimistic-ui-for-sending-and-polling-to-refresh",
+      "featureTitle": "Frontend: implement Chat Thread screen with message bubbles, timestamps, and a composer to send messages; use optimistic UI for sending and polling to refresh.",
+      "files": [
+        "frontend/src/components/MessageBubble.tsx",
+        "frontend/src/components/MessageComposer.tsx",
+        "frontend/src/screens/ChatThreadScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-frontend-backend-add-a-simple-user-profile-setup-so-users-can-set-a-display-name-and-show-display-names-in-chat-list-and-thread-header",
+      "featureTitle": "Frontend + Backend: add a simple user profile setup so users can set a display name, and show display names in chat list and thread header.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ProfileSetupDialog.tsx",
+        "frontend/src/screens/ChatListScreen.tsx",
+        "frontend/src/screens/ChatThreadScreen.tsx",
+        "frontend/src/screens/ProfileScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-basic-safety-and-quality-constraints-message-size-limits-input-sanitization-for-display-and-graceful-error-states-toasts-for-failed-network-actions",
+      "featureTitle": "Add basic safety and quality constraints: message size limits, input sanitization for display, and graceful error states/toasts for failed network actions.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/MessageBubble.tsx",
+        "frontend/src/components/MessageComposer.tsx",
+        "frontend/src/lib/validation.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-generated-static-image-assets-for-branding-and-empty-states-and-render-them-from-the-frontend-as-static-files-do-not-serve-images-from-the-backend",
+      "featureTitle": "Add generated static image assets for branding and empty states, and render them from the frontend as static files (do not serve images from the backend).",
+      "files": [
+        "frontend/src/components/AppHeader.tsx",
+        "frontend/src/screens/ChatListScreen.tsx",
+        "frontend/src/screens/SignInScreen.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

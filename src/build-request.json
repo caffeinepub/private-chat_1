@@ -1,0 +1,203 @@
+{
+  "kind": "build_request",
+  "title": "Build “Private Chat” WhatsApp-like online chat app with distinct premium UI",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create the app shell and branding for an app named “Private Chat”, and ensure the UI copy uses English throughout.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "App name private chat package name com.private.chat"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The app header/title displays “Private Chat”.",
+        "All visible UI text is in English (no Hindi/Urdu placeholders)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement authentication using Internet Identity and gate chat features behind sign-in.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "WhatsApp Jaisi online chatting wala app banana",
+          "online chatting ho"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unauthenticated users see a sign-in screen with an Internet Identity login action.",
+        "After login, the user’s Principal is available to frontend queries/mutations and used for all chat actions."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Backend: implement core data models and access control for private chats (1:1 threads) and messages, ensuring only thread participants can read/send messages.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "private chat",
+          "online chatting ho"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A user can create (or open) a 1:1 thread with another user principal.",
+        "Only participants of a thread can list messages or post messages to that thread.",
+        "Attempts by non-participants to read/post return an explicit error."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Backend: implement APIs for chat list and message history with pagination suitable for polling (no real-time sockets), including timestamps and stable ordering.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "online chatting ho"
+        ]
+      },
+      "acceptanceCriteria": [
+        "There is an API to list a user’s threads sorted by last activity.",
+        "There is an API to fetch messages for a thread with pagination (e.g., before/after a cursor or by limit + offset semantics).",
+        "Messages are returned in a consistent order with a timestamp field."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Frontend: build a premium, WhatsApp-different chat UI with a coherent visual theme (colors, typography, spacing, components) applied consistently across all screens.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "UI WhatsApp se kafi alag Ho",
+          "shop Ho dikhne mein UI best Ho"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The UI does not mimic WhatsApp’s layout/colors; it uses a distinct theme (e.g., charcoal/ivory base with amber or teal accents, modern typography, rounded surfaces).",
+        "At least these screens share the same design system: Login, Chat List, Chat Thread, Settings/Profile.",
+        "Responsive layout works on mobile-sized widths and desktop widths."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Frontend: implement Chat List screen showing existing 1:1 threads, last message preview, last activity time, and an unread indicator (if available), with navigation into a thread.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "online chatting"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Chat List displays threads for the signed-in user.",
+        "Clicking a thread opens the corresponding Chat Thread screen.",
+        "Empty state is shown when there are no chats yet."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Frontend: implement Chat Thread screen with message bubbles, timestamps, and a composer to send messages; use optimistic UI for sending and polling to refresh.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "online chatting ho"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can type a message and send it; the message appears immediately (optimistic) and is confirmed after backend response.",
+        "Thread view polls for new messages at a reasonable interval and updates without full page refresh.",
+        "Message length is validated on the client (and rejected by backend if exceeded)."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Frontend + Backend: add a simple user profile setup so users can set a display name, and show display names in chat list and thread header.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Private Chat"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can set/update their display name in a Settings/Profile screen.",
+        "Chat list and thread header display the other participant’s display name when available (fallback to shortened principal if not)."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Add basic safety and quality constraints: message size limits, input sanitization for display, and graceful error states/toasts for failed network actions.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "App banao"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend enforces a maximum message length and returns a clear error when exceeded.",
+        "Frontend prevents sending empty messages and shows an error UI on failures (e.g., toast/inline).",
+        "User-generated text is rendered safely (no HTML injection)."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Add generated static image assets for branding and empty states, and render them from the frontend as static files (do not serve images from the backend).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "UI best Ho"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images are placed under frontend/public/assets/generated and used in the UI (e.g., logo in header/login, empty-state illustration in chat list)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (all logic in backend/main.mo).",
+    "Do not edit files under frontend/src/components/ui or other immutable paths listed in SYSTEM_CONTEXT.",
+    "No WebSockets/real-time chat; implement online chat via polling with React Query.",
+    "Use English for all user-facing text in the app."
+  ],
+  "nonGoals": [
+    "Android APK packaging and setting an Android package name (e.g., com.private.chat) is out of scope for this Internet Computer web app build.",
+    "Group chats, voice/video calls, media/file sharing, push notifications, and end-to-end encryption are not included unless explicitly requested later."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Minimal premium wordmark logo, abstract lock+chat motif, dark-on-light and light-on-dark compatible (private-chat-logo.dim_1024x256.png)",
+      "App icon with abstract lock+chat symbol, no text (private-chat-icon.dim_512x512.png)",
+      "Empty state illustration: modern minimal chat scene with privacy motif, flat/vector style (private-chat-empty-state.dim_1200x800.png)"
+    ],
+    "edits": []
+  }
+}

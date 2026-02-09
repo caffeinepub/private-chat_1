@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build an Android WhatsApp-like online chat app with a distinct premium UI, named \"Private Chat\" (package: com.private.chat).",
+  "architectural_notes": [
+    "App is an online messaging/chat application (WhatsApp-like core functionality).",
+    "UI must be best-in-class/premium and clearly different from WhatsApp."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Minimal premium wordmark logo, abstract lock+chat motif, dark-on-light and light-on-dark compatible (private-chat-logo.dim_1024x256.png)\n- App icon with abstract lock+chat symbol, no text (private-chat-icon.dim_512x512.png)\n- Empty state illustration: modern minimal chat scene with privacy motif, flat/vector style (private-chat-empty-state.dim_1200x800.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-the-app-shell-and-branding-for-an-app-named-private-chat-and-ensure-the-ui-copy-uses-english-throughout",
+      "title": "Create the app shell and branding for an app named “Private Chat”, and ensure the UI copy uses English throughout.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-authentication-using-internet-identity-and-gate-chat-features-behind-sign-in",
+      "title": "Implement authentication using Internet Identity and gate chat features behind sign-in.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-frontend-build-a-premium-whatsapp-different-chat-ui-with-a-coherent-visual-theme-colors-typography-spacing-components-applied-consistently-across-all-screens",
+      "title": "Frontend: build a premium, WhatsApp-different chat UI with a coherent visual theme (colors, typography, spacing, components) applied consistently across all screens.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-frontend-implement-chat-list-screen-showing-existing-1-1-threads-last-message-preview-last-activity-time-and-an-unread-indicator-if-available-with-navigation-into-a-thread",
+      "title": "Frontend: implement Chat List screen showing existing 1:1 threads, last message preview, last activity time, and an unread indicator (if available), with navigation into a thread.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-frontend-implement-chat-thread-screen-with-message-bubbles-timestamps-and-a-composer-to-send-messages-use-optimistic-ui-for-sending-and-polling-to-refresh",
+      "title": "Frontend: implement Chat Thread screen with message bubbles, timestamps, and a composer to send messages; use optimistic UI for sending and polling to refresh.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-frontend-backend-add-a-simple-user-profile-setup-so-users-can-set-a-display-name-and-show-display-names-in-chat-list-and-thread-header",
+      "title": "Frontend + Backend: add a simple user profile setup so users can set a display name, and show display names in chat list and thread header.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-basic-safety-and-quality-constraints-message-size-limits-input-sanitization-for-display-and-graceful-error-states-toasts-for-failed-network-actions",
+      "title": "Add basic safety and quality constraints: message size limits, input sanitization for display, and graceful error states/toasts for failed network actions.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-image-assets-for-branding-and-empty-states-and-render-them-from-the-frontend-as-static-files-do-not-serve-images-from-the-backend",
+      "title": "Add generated static image assets for branding and empty states, and render them from the frontend as static files (do not serve images from the backend).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create \"Private Chat\" (com.private.chat): WhatsApp-like online chatting app with a premium, distinct UI",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Backend: implement core data models and access control for private chats (1:1 threads) and messages, ensuring only thread participants can read/send messages.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Backend: implement APIs for chat list and message history with pagination suitable for polling (no real-time sockets), including timestamps and stable ordering.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Private Chat",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

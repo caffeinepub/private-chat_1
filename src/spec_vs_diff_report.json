@@ -1,0 +1,82 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-09T07:19:40.975Z",
+  "summary": "The diff implements a branded “Private Chat” app shell with Internet Identity login gating, a distinct premium theme, chat list + chat thread screens with polling via React Query, optimistic-ish sending (invalidate-and-refetch), profile setup/settings with display names, and basic client-side validation and toasts. However, backend APIs shown do not demonstrate required pagination for message history, and the chat list UI does not show a true last-message preview (it shows a truncated principal instead). The backend chat-list sorting requirement is also not clearly met (frontend sorts client-side).",
+  "missing_requirements": [
+    {
+      "id": "REQ-4",
+      "requirement": "Backend API to fetch messages for a thread with pagination (cursor or limit/offset), suitable for polling.",
+      "reason": "The backend shows `getMessages(withUser : Principal) : async [ChatMessage]` returning the full array; no pagination parameters (limit/cursor/offset) are visible in the diff summary.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Backend API to list a user’s threads sorted by last activity.",
+      "reason": "The backend `getChatList()` iterates threads and collects them but does not show sorting; sorting is performed in the frontend query instead, which does not satisfy the acceptance criterion that the API itself is sorted.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Chat List shows last message preview for each thread.",
+      "reason": "The chat list item displays a truncated `userId` as the preview text rather than the last message content; no last-message field is shown coming from the backend chat list API in the diff summary.",
+      "evidence": [
+        "frontend/src/components/ChatThreadItem.tsx",
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Secret-token-based access control initialization via URL parameter (`caffeineAdminToken`) and actor method `_initializeAccessControlWithSecret`.",
+      "reason": "The BuildRequest does not mention any admin-token bootstrap or secret URL parameter mechanism; this appears to be additional functionality beyond Internet Identity authentication.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts",
+        "frontend/src/utils/urlParams.ts",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Theme toggle (dark/light) control in the header using next-themes.",
+      "reason": "A theme toggle was not requested explicitly (REQ-5 asks for a coherent premium theme, not a runtime toggle).",
+      "evidence": [
+        "frontend/src/components/AppHeader.tsx",
+        "frontend/src/App.tsx",
+        "frontend/src/index.css"
+      ]
+    }
+  ],
+  "confidence": 0.68,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AppHeader.tsx",
+    "frontend/src/components/ChatThreadHeader.tsx",
+    "frontend/src/components/ChatThreadItem.tsx",
+    "frontend/src/components/MessageBubble.tsx",
+    "frontend/src/components/MessageComposer.tsx",
+    "frontend/src/components/ProfileSetupDialog.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/validation.ts",
+    "frontend/src/main.tsx",
+    "frontend/src/screens/ChatListScreen.tsx",
+    "frontend/src/screens/ChatThreadScreen.tsx",
+    "frontend/src/screens/ProfileScreen.tsx",
+    "frontend/src/screens/SignInScreen.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

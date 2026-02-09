@@ -1,0 +1,290 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Private Chat — Premium 1:1 Chat Frontend (Internet Identity + Polling)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Create the app shell/branding for “Private Chat” and ensure all UI copy is English-only.",
+      "acceptanceCriteria": [
+        "The app header/title displays “Private Chat”.",
+        "All visible UI text is in English (no Hindi/Urdu placeholders)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Ensure document metadata (title) aligns with “Private Chat” branding and English-only copy."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the top-level app shell (header + main content area) that consistently displays the “Private Chat” title and provides layout structure for authenticated screens."
+        },
+        {
+          "path": "frontend/src/components/AppHeader.tsx",
+          "operation": "create",
+          "description": "Add a reusable header component that renders the “Private Chat” brand area and top-level navigation/actions (e.g., Settings link, logout button) using English-only labels."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Implement Internet Identity sign-in UX and gate chat features behind authentication, ensuring Principal is used in frontend actions.",
+      "acceptanceCriteria": [
+        "Unauthenticated users see a sign-in screen with an Internet Identity login action.",
+        "After login, the user’s Principal is available to frontend queries/mutations and used for all chat actions."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useActor.ts",
+          "operation": "modify",
+          "description": "Align actor creation and cache invalidation behavior with authenticated usage so authenticated queries/mutations use the logged-in identity’s Principal (and anonymous users remain gated in the UI)."
+        },
+        {
+          "path": "frontend/src/components/AuthGate.tsx",
+          "operation": "create",
+          "description": "Create an authentication gate that renders a dedicated sign-in screen when no Internet Identity is present and renders the chat app only when authenticated. Use the selected \"authorization\" component guidance for Internet Identity flow; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/screens/SignInScreen.tsx",
+          "operation": "create",
+          "description": "Implement an English-only sign-in screen with a primary Internet Identity login action and a premium branded layout. Use the selected \"authorization\" component guidance for login/logout behaviors and cache clearing; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the AuthGate into the app so chat list/thread/profile screens are only reachable when signed in (no authentication, no app data). Use the selected \"authorization\" component guidance for gating; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Build a premium, WhatsApp-different UI theme applied consistently across Login, Chat List, Chat Thread, and Settings/Profile with responsive layout.",
+      "acceptanceCriteria": [
+        "The UI does not mimic WhatsApp’s layout/colors; it uses a distinct theme (e.g., charcoal/ivory base with amber or teal accents, modern typography, rounded surfaces).",
+        "At least these screens share the same design system: Login, Chat List, Chat Thread, Settings/Profile.",
+        "Responsive layout works on mobile-sized widths and desktop widths."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global styling/tokens (CSS variables + Tailwind base layer) for a distinct premium theme (non-WhatsApp), including typography defaults, surfaces, and spacing rhythm; ensure all text remains English-only."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend theme tokens (colors/radius/shadows) to support the premium design system consistently across screens."
+        },
+        {
+          "path": "frontend/src/components/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a responsive layout wrapper used by authenticated screens (chat list/thread/profile) to enforce consistent spacing, max-width behavior, and premium surfaces."
+        },
+        {
+          "path": "frontend/src/screens/SignInScreen.tsx",
+          "operation": "modify",
+          "description": "Apply the shared premium theme and layout patterns to the login screen (distinct from WhatsApp look)."
+        },
+        {
+          "path": "frontend/src/screens/ChatListScreen.tsx",
+          "operation": "create",
+          "description": "Create the chat list screen using the shared design system (cards/rows/typography) and responsive behavior."
+        },
+        {
+          "path": "frontend/src/screens/ChatThreadScreen.tsx",
+          "operation": "create",
+          "description": "Create the chat thread screen with premium message bubble styling and responsive layout (mobile and desktop)."
+        },
+        {
+          "path": "frontend/src/screens/ProfileScreen.tsx",
+          "operation": "create",
+          "description": "Create the settings/profile screen using the same design system for consistent premium feel."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Implement Chat List screen showing threads, last message preview, last activity time, unread indicator (if available), and navigation into a thread.",
+      "acceptanceCriteria": [
+        "Chat List displays threads for the signed-in user.",
+        "Clicking a thread opens the corresponding Chat Thread screen.",
+        "Empty state is shown when there are no chats yet."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useChatList.ts",
+          "operation": "create",
+          "description": "Add React Query hooks for fetching chat list data for the signed-in user and (when needed) related display names/unread counts. Use polling where appropriate per constraints."
+        },
+        {
+          "path": "frontend/src/screens/ChatListScreen.tsx",
+          "operation": "modify",
+          "description": "Render thread rows with other participant display name fallback, last activity time, optional last message preview (derived safely), and unread indicator when available; include an English-only empty state when no chats exist."
+        },
+        {
+          "path": "frontend/src/router.tsx",
+          "operation": "create",
+          "description": "Introduce a minimal routing layer (e.g., route state + params) to support navigating between Chat List, Chat Thread, and Profile screens without creating orphan views."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire Chat List as the default authenticated view and enable navigation into a thread via the router (ensuring the chat list click opens Chat Thread)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Implement Chat Thread screen with message bubbles, timestamps, composer with optimistic sending, and polling for refresh; validate message length client-side.",
+      "acceptanceCriteria": [
+        "User can type a message and send it; the message appears immediately (optimistic) and is confirmed after backend response.",
+        "Thread view polls for new messages at a reasonable interval and updates without full page refresh.",
+        "Message length is validated on the client (and rejected by backend if exceeded)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useChatThread.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for fetching thread messages with polling and a mutation for sending messages that supports optimistic UI updates and reconciliation."
+        },
+        {
+          "path": "frontend/src/components/MessageComposer.tsx",
+          "operation": "create",
+          "description": "Create a message input/composer component with English-only placeholders, client-side validation (non-empty + max length), disabled/loading states, and send action."
+        },
+        {
+          "path": "frontend/src/components/MessageBubble.tsx",
+          "operation": "create",
+          "description": "Create a safe-rendering message bubble component that displays text content (no HTML injection), sender alignment, and timestamps in a premium style."
+        },
+        {
+          "path": "frontend/src/screens/ChatThreadScreen.tsx",
+          "operation": "modify",
+          "description": "Wire polling message history, optimistic send behavior, and bubble rendering into the thread screen; ensure scrolling behavior is usable on mobile and desktop."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Add user profile setup to set display name and show display names in chat list and thread header (fallback to shortened principal).",
+      "acceptanceCriteria": [
+        "User can set/update their display name in a Settings/Profile screen.",
+        "Chat list and thread header display the other participant’s display name when available (fallback to shortened principal if not)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useUserProfile.ts",
+          "operation": "create",
+          "description": "Implement React Query hooks for getCallerUserProfile/saveCallerUserProfile and for fetching other users’ profiles for display. Use the selected \"authorization\" component’s profile setup guidance; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Add a profile setup dialog that prompts first-time users to set a display name after login (avoid modal flash by following the selected \"authorization\" component guidance); verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/screens/ProfileScreen.tsx",
+          "operation": "modify",
+          "description": "Implement display name update form with English-only copy and save action; show success/error feedback and keep the premium theme consistent."
+        },
+        {
+          "path": "frontend/src/screens/ChatListScreen.tsx",
+          "operation": "modify",
+          "description": "Show the other participant’s display name when available, otherwise show a shortened principal string."
+        },
+        {
+          "path": "frontend/src/screens/ChatThreadScreen.tsx",
+          "operation": "modify",
+          "description": "Display the other participant’s display name in the thread header with a fallback to shortened principal."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the Settings/Profile screen into navigation and ensure the profile setup dialog can appear after login when no profile exists."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Add safety/quality: message limits, safe text rendering, and graceful error states/toasts for failures.",
+      "acceptanceCriteria": [
+        "Backend enforces a maximum message length and returns a clear error when exceeded.",
+        "Frontend prevents sending empty messages and shows an error UI on failures (e.g., toast/inline).",
+        "User-generated text is rendered safely (no HTML injection)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/validation.ts",
+          "operation": "create",
+          "description": "Centralize client-side validation rules (non-empty, max message length) and helpers for consistent enforcement across composer/profile."
+        },
+        {
+          "path": "frontend/src/components/AppToaster.tsx",
+          "operation": "create",
+          "description": "Add an application-level toast renderer for network and authorization errors using the selected \"shadcn-ui\" toast/toaster patterns; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useChatThread.ts",
+          "operation": "modify",
+          "description": "Surface send/poll failures as user-friendly English errors (toast/inline), handle backend rejection messages gracefully, and ensure optimistic UI rolls back on failure."
+        },
+        {
+          "path": "frontend/src/components/MessageBubble.tsx",
+          "operation": "modify",
+          "description": "Ensure user-generated content is rendered as plain text (no HTML injection) and apply truncation/wrapping rules for safety."
+        },
+        {
+          "path": "frontend/src/components/MessageComposer.tsx",
+          "operation": "modify",
+          "description": "Prevent sending empty messages, enforce max length, and show immediate English validation feedback."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Mount the global toaster and ensure errors from authenticated areas are visible without breaking navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Add generated static branding/empty-state images under frontend/public/assets/generated and render them in the UI.",
+      "acceptanceCriteria": [
+        "Generated images are placed under frontend/public/assets/generated and used in the UI (e.g., logo in header/login, empty-state illustration in chat list)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/private-chat-logo.dim_1024x256.png",
+          "operation": "create",
+          "description": "Add the generated branding asset at the exact required path so it can be rendered as a static frontend file."
+        },
+        {
+          "path": "frontend/public/assets/generated/private-chat-icon.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated app icon asset at the exact required path so it can be referenced by the frontend (static)."
+        },
+        {
+          "path": "frontend/public/assets/generated/private-chat-empty-state.dim_1200x800.png",
+          "operation": "create",
+          "description": "Add the generated empty state illustration at the exact required path so it can be rendered on the Chat List empty state."
+        },
+        {
+          "path": "frontend/src/components/AppHeader.tsx",
+          "operation": "modify",
+          "description": "Render frontend/public/assets/generated/private-chat-logo.dim_1024x256.png in the header brand area (static asset usage)."
+        },
+        {
+          "path": "frontend/src/screens/SignInScreen.tsx",
+          "operation": "modify",
+          "description": "Render frontend/public/assets/generated/private-chat-logo.dim_1024x256.png on the sign-in screen and apply premium layout."
+        },
+        {
+          "path": "frontend/src/screens/ChatListScreen.tsx",
+          "operation": "modify",
+          "description": "Render frontend/public/assets/generated/private-chat-empty-state.dim_1200x800.png in the empty state UI (static asset usage) with English-only empty-state copy."
+        }
+      ]
+    }
+  ]
+}
